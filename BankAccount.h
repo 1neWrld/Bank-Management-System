@@ -3,6 +3,9 @@
 #define BANKACCOUNT_H
 
 #include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 using namespace std;
 
@@ -28,6 +31,13 @@ class BankAccount
         string getName() const; 
         
         bool VerifyPin(const std::string& inputPin) const;
+
+        void SaveToFile(std::ofstream& out) const;
+        bool LoadFromFile(std::ifstream& in, const std::string& accountNumber, const std::string& pin);
+
+
+        friend std::ostream& operator<< (std::ostream& out, const BankAccount& bankAccount);
+
 };
 
 

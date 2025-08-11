@@ -37,3 +37,31 @@ bool BankAccount::VerifyPin(const std::string& inputPin) const {
     return pin == inputPin;
 }
 
+void BankAccount::SaveToFile(std::ofstream& out) const {
+
+    out << name << "|" << accountNumber << "|" << pin << "|" << balance << std::endl;
+
+}
+
+bool BankAccount::LoadFromFile(std::ifstream& in, const std::string& accountNumber, const std::string& pin) {
+   std::string line;
+    while (std::getline(in, line)) {
+        std::stringstream ss(line);
+        std::string n, acc, p;
+        double bal;
+
+        std::getline(ss, n, '|');
+        std::getline(ss, acc, '|');
+        std::getline(ss, p, '|');
+        ss >> bal;
+
+        if (acc == accountNumber && p == pin) {
+            name = n;
+            this->accountNumber = acc;
+            this->pin = p;
+            balance = bal;
+            return true;
+        }
+    }
+    return false;
+}
