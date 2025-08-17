@@ -1,6 +1,6 @@
 # 💳 Bank Management System (C++)
 
-A simple terminal-based Bank Management System written in C++.
+A terminal-based Bank Management System written in C++.
 
 This project is built for learning purposes and simulates basic banking operations like account creation, deposits, withdrawals, and balance checks. It is designed as a console application with potential for file saving and admin extensions in future versions.
 
