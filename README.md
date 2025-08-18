@@ -4,6 +4,8 @@ A terminal-based Bank Management System written in C++.
 
 This project simulates basic banking operations like account creation, deposits, withdrawals, and balance checks. It is designed as a console application with potential for file saving and admin extensions in future versions.
 
+https://github.com/user-attachments/assets/bbc0ade2-cab3-4af5-bac9-694e460c1dad
+
 ---
 
 ## 📌 Features
