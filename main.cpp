@@ -1,9 +1,14 @@
 #include <iostream>
 #include <fstream>
+#include <cctype>
+#include <vector>
+#include <sstream>
+
 #include "BankAccount.h"
 
+using namespace std;
+
 int main() {
-    using namespace std;
 
     BankAccount account("", "", "");
     char choice;
@@ -12,11 +17,12 @@ int main() {
     cout << "Welcome to the 1neWrld Bank!" << endl;
     cout << "---------------------------" << endl;
 
-    cout << "Do you want to (L)oad an existing account or (C)reate new? ";
+    cout << "(C)reate or (L)oad existing account? ";
     cin >> choice;
     cin.ignore();  // clear newline from buffer
+    choice = std::tolower(choice);  // convert to lowercase for easier comparison
 
-    if (choice == 'L' || choice == 'l') {
+    if (choice == 'l') {
         string accountNumber, pin;
         cout << "Enter your account number: ";
         getline(cin, accountNumber);
@@ -35,9 +41,12 @@ int main() {
         }
 
         cout << "Account loaded successfully!" << endl;
+
+        cout << "Welcome back, " << account.getName() << "!" << endl;
     }
-    else {
-        // Create new account flow (same as your existing code)
+
+    else if(choice == 'c') {
+       // Create new account flow (same as your existing code)
         string name, accountNumber, pin;
         cout << "Please enter your Full Name: ";
         getline(cin, name);
@@ -47,7 +56,11 @@ int main() {
         getline(cin, pin);
 
         account = BankAccount(name, accountNumber, pin);
-        cout << "Your Wrld has been created successfully!" << endl;
+        cout << account.getName() << "'s" << " Wrld has been created successfully!" << endl;
+    }
+    else {
+               cout << "Invalid Option" << endl;
+               return 1;
     }
 
     int option;
@@ -91,13 +104,46 @@ int main() {
 
     } while (option != 4);
 
-    // Save account data before exit
-    ofstream outFile("accounts.txt", ios::app);  // append mode
-    if (!outFile) {
-        cerr << "Failed to open accounts file for saving." << endl;
-    } else {
-        account.SaveToFile(outFile);
+   // 1. Load existing accounts from file
+std::vector<BankAccount> accounts;
+{
+    std::ifstream inFile("accounts.txt");
+    std::string line;
+    while (std::getline(inFile, line)) 
+    {
+        std::stringstream ss(line);
+        std::string n, accNum, pin;
+        double bal;
+        std::getline(ss, n, '|');
+        std::getline(ss, accNum, '|');
+        std::getline(ss, pin, '|');
+        ss >> bal;
+
+        accounts.emplace_back(n, accNum, pin);
+        accounts.back().deposit(bal); // or set balance directly if you add setter
     }
+}
+
+// 2. Update or insert current account
+bool found = false;
+for (auto &acc : accounts) {
+    if (acc.getAccountNumber() == account.getAccountNumber()) {
+        acc = account;
+        found = true;
+        break;
+    }
+}
+if (!found) {
+    accounts.push_back(account);
+}
+
+// 3. Rewrite file
+std::ofstream outFile("accounts.txt", std::ios::trunc); // trunc -> overwrite
+for (const auto &acc : accounts) 
+{
+    acc.SaveToFile(outFile);
+}
+
 
     cout << "----------------------------------" << endl;
     cout << "Thank you for using 1neWrld Bank!" << endl;
