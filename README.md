@@ -22,7 +22,7 @@ https://github.com/user-attachments/assets/bbc0ade2-cab3-4af5-bac9-694e460c1dad
 ## 🛠️ Tech Stack
 
 - **Language:** C++
-- **Tools:** g++, WSL (Ubuntu), Git, Visual Studio Code
+- **Tools:** g++, WSL (Ubuntu), GDB (Debugging tool), Git, Visual Studio Code, Makefile
 - **Version Control:** Git & GitHub
 
 ---
@@ -39,13 +39,13 @@ cd Bank-Management-System
 ### 2. Compile the Program
 
 ```bash
-g++ main.cpp -o bank
+make
 ```
 
 ### 3. Run the program
 
 ```bash
-./bank
+./main
 ```
 
 
