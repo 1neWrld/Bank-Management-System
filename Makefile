@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall -std=c++17
 
-TARGET = main
+TARGET = bank
 SOURCES = main.cpp bankaccount.cpp banksystem.cpp
 
 all: $(TARGET)
